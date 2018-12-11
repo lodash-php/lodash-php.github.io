@@ -44,6 +44,8 @@ _::each([1, 2, 3], function (int $item) {
 - [Lang](#lang)
 - [Math](#math)
 - [Number](#number)
+- [Object](#object)
+- [Seq](#seq)
 - [String](#string)
 - [Util](#util)
 
@@ -52,9 +54,11 @@ _::each([1, 2, 3], function (int $item) {
 ### chunk
 
 Creates an array of elements split into groups the length of `size`.
-
 If `array` can't be split evenly, the final chunk will be the remaining
 elements.
+
+
+
 
 **Arguments:**
 
@@ -87,6 +91,7 @@ Creates an array with all falsey values removed. The values `false`, `null`,
 
 
 
+
 **Arguments:**
 
 @param array $array The array to compact.
@@ -113,11 +118,13 @@ and/or values.
 
 
 
+
+
 **Arguments:**
 
 @param array $array The array to concatenate.
 
-@param mixed $values The values to concatenate.
+@param array<int, mixed> $values The values to concatenate.
 
 
 
@@ -133,10 +140,10 @@ Example:
 $array = [1];
 $other = concat($array, 2, [3], [[4]]);
 
-var_dump(other)
+var_dump($other)
 // => [1, 2, 3, [4]]
 
-var_dump(array)
+var_dump($array)
 // => [1]
 
 ```
@@ -149,11 +156,15 @@ determined by the first array.
 
 **Note:** Unlike `pullAll`, this method returns a new array.
 
+
+
+
+
 **Arguments:**
 
 @param array $array The array to inspect.
 
-@param array $values The values to exclude.
+@param array ...$values The values to exclude.
 
 
 
@@ -180,13 +191,17 @@ determined by the first array. The iteratee is invoked with one argument:
 
 **Note:** Unlike `pullAllBy`, this method returns a new array.
 
+
+
+
+
 **Arguments:**
 
 @param array $array The array to inspect.
 
-@param array $values The values to exclude.
+@param array<int, mixed> ...$values The values to exclude.
 
-@param callable $ iteratee The iteratee invoked per element.
+@param callable $iteratee The iteratee invoked per element.
 
 
 
@@ -198,8 +213,10 @@ Example:
 ```php
 <?php
  use function _\differenceBy;
+
 differenceBy([2.1, 1.2], [2.3, 3.4], 'floor')
 // => [1.2]
+
 ```
 ### differenceWith
 
@@ -210,11 +227,16 @@ is invoked with two arguments: (arrVal, othVal).
 
 **Note:** Unlike `pullAllWith`, this method returns a new array.
 
+
+
+
+
+
 **Arguments:**
 
-@param array $array The array to inspect.
+@param array<int, mixed> $array The array to inspect.
 
-@param array[] $values The values to exclude.
+@param array ...$values The values to exclude.
 
 @param callable $comparator The comparator invoked per element.
 
@@ -240,6 +262,9 @@ differenceWith($objects, [[ 'x' => 1, 'y' => 2 ]], '_::isEqual')
 Creates a slice of `array` with `n` elements dropped from the beginning.
 
 **NOTE:** This function will reorder and reset the array indices
+
+
+
 
 **Arguments:**
 
@@ -274,8 +299,10 @@ drop([1, 2, 3], 0)
 ### dropRight
 
 Creates a slice of `array` with `n` elements dropped from the end.
-
 **NOTE:** This function will reorder and reset the array indices
+
+
+
 
 **Arguments:**
 
@@ -310,9 +337,11 @@ dropRight([1, 2, 3], 0)
 ### dropRightWhile
 
 Creates a slice of `array` excluding elements dropped from the end.
-
 Elements are dropped until `predicate` returns falsey. The predicate is
 invoked with three arguments: (value, index, array).
+
+
+
 
 **Arguments:**
 
@@ -332,9 +361,9 @@ Example:
  use function _\dropRightWhile;
 
 $users = [
-  [ 'user' => 'barney',  'active' => false ],
-  [ 'user' => 'fred',    'active' => true ],
-  [ 'user' => 'pebbles', 'active' => true ]
+[ 'user' => 'barney',  'active' => false ],
+[ 'user' => 'fred',    'active' => true ],
+[ 'user' => 'pebbles', 'active' => true ]
 ]
 
 dropRightWhile($users, function($user) { return $user['active']; })
@@ -344,9 +373,11 @@ dropRightWhile($users, function($user) { return $user['active']; })
 ### dropWhile
 
 Creates a slice of `array` excluding elements dropped from the beginning.
-
 Elements are dropped until `predicate` returns falsey. The predicate is
 invoked with three arguments: (value, index, array).
+
+
+
 
 **Arguments:**
 
@@ -366,9 +397,9 @@ Example:
  use function _\dropWhile;
 
 $users = [
-  [ 'user' => 'barney',  'active' => true ],
-  [ 'user' => 'fred',    'active' => true ],
-  [ 'user' => 'pebbles', 'active' => false ]
+[ 'user' => 'barney',  'active' => true ],
+[ 'user' => 'fred',    'active' => true ],
+[ 'user' => 'pebbles', 'active' => false ]
 ]
 
 dropWhile($users, function($user) { return $user['active']; } )
@@ -378,7 +409,6 @@ dropWhile($users, function($user) { return $user['active']; } )
 ### every
 
 Checks if `predicate` returns truthy for **all** elements of `array`.
-
 Iteration is stopped once `predicate` returns falsey. The predicate is
 invoked with three arguments: (value, index, array).
 
@@ -386,6 +416,9 @@ invoked with three arguments: (value, index, array).
 [empty arrays](https://en.wikipedia.org/wiki/Empty_set) because
 [everything is true](https://en.wikipedia.org/wiki/Vacuous_truth) of
 elements of empty arrays.
+
+
+
 
 **Arguments:**
 
@@ -408,8 +441,8 @@ every([true, 1, null, 'yes'], function ($value) { return is_bool($value);})
 // => false
 
 $users = [
-    ['user' => 'barney', 'age' => 36, 'active' => false],
-    ['user' => 'fred', 'age' => 40, 'active' => false],
+['user' => 'barney', 'age' => 36, 'active' => false],
+['user' => 'fred', 'age' => 40, 'active' => false],
 ];
 
 // The `matches` iteratee shorthand.
@@ -429,6 +462,7 @@ $this->assertFalse(every($users, 'active'));
 ### findIndex
 
 This method is like `find` except that it returns the index of the first element predicate returns truthy for instead of the element itself.
+
 
 
 
@@ -452,9 +486,9 @@ Example:
  use function _\findIndex;
 
 $users = [
-    ['user' => 'barney',  'active' => false],
-    ['user' => 'fred',    'active' => false],
-    ['user' => 'pebbles', 'active' => true],
+['user' => 'barney',  'active' => false],
+['user' => 'fred',    'active' => false],
+['user' => 'pebbles', 'active' => true],
 ];
 
 findIndex($users, function($o) { return $o['user'] s== 'barney'; });
@@ -480,6 +514,7 @@ of `collection` from right to left.
 
 
 
+
 **Arguments:**
 
 @param array $array The array to inspect.
@@ -500,9 +535,9 @@ Example:
  use function _\findLastIndex;
 
 $users = [
-  ['user' => 'barney',  'active' => true ],
-  ['user' => 'fred',    'active' => false ],
-  ['user' => 'pebbles', 'active' => false ]
+['user' => 'barney',  'active' => true ],
+['user' => 'fred',    'active' => false ],
+['user' => 'pebbles', 'active' => false ]
 ]
 
 findLastIndex($users, function($user) { return $user['user'] === 'pebbles'; })
@@ -512,6 +547,7 @@ findLastIndex($users, function($user) { return $user['user'] === 'pebbles'; })
 ### flatten
 
 Flattens `array` a single level deep.
+
 
 
 
@@ -529,12 +565,15 @@ Example:
 ```php
 <?php
  use function _\flatten;
+
 flatten([1, [2, [3, [4]], 5]])
 // => [1, 2, [3, [4]], 5]
+
 ```
 ### flattenDeep
 
 Recursively flattens `array`.
+
 
 
 
@@ -560,6 +599,7 @@ flattenDeep([1, [2, [3, [4]], 5]]);
 ### flattenDepth
 
 Recursively flatten `array` up to `depth` times.
+
 
 
 
@@ -596,6 +636,8 @@ from key-value `pairs`.
 
 
 
+
+
 **Arguments:**
 
 @param array $pairs The key-value pairs.
@@ -604,7 +646,7 @@ from key-value `pairs`.
 
 **Return:**
 
-@return object the new object.
+@return \stdClass the new object.
 
 Example:
 ```php
@@ -621,6 +663,8 @@ fromPairs([['a', 1], ['b', 2]])
 ### head
 
 Gets the first element of `array`.
+
+
 
 
 
@@ -652,6 +696,7 @@ Gets the index at which the first occurrence of `value` is found in `array`
 using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)
 for equality comparisons. If `fromIndex` is negative, it's used as the
 offset from the end of `array`.
+
 
 
 
@@ -688,6 +733,7 @@ Gets all but the last element of `array`.
 
 
 
+
 **Arguments:**
 
 @param array $array The array to query.
@@ -702,8 +748,10 @@ Example:
 ```php
 <?php
  use function _\initial;
+
 initial([1, 2, 3])
 // => [1, 2]
+
 ```
 ### intersection
 
@@ -714,9 +762,11 @@ determined by the first array.
 
 
 
+
+
 **Arguments:**
 
-@param array[] $arrays
+@param array ...$arrays
 
 
 
@@ -728,8 +778,10 @@ Example:
 ```php
 <?php
  use function _\intersection;
+
 intersection([2, 1], [2, 3])
 // => [2]
+
 ```
 ### intersectionBy
 
@@ -741,9 +793,10 @@ determined by the first array. The iteratee is invoked with one argument:
 
 
 
+
 **Arguments:**
 
-@param array[] $arrays
+@param array<int, mixed> ...$arrays
 
 @param callable $iteratee The iteratee invoked per element.
 
@@ -775,9 +828,11 @@ invoked with two arguments: (arrVal, othVal).
 
 
 
+
+
 **Arguments:**
 
-@param array[] $arrays
+@param array ...$arrays
 
 @param callable $comparator The comparator invoked per element.
 
@@ -805,6 +860,7 @@ Gets the last element of `array`.
 
 
 
+
 **Arguments:**
 
 @param array $array The array to query.
@@ -828,6 +884,7 @@ last([1, 2, 3])
 
 This method is like `indexOf` except that it iterates over elements of
 `array` from right to left.
+
 
 
 
@@ -865,6 +922,7 @@ element from the end is returned.
 
 
 
+
 **Arguments:**
 
 @param array $array The array to query.
@@ -881,6 +939,7 @@ Example:
 ```php
 <?php
  use function _\nth;
+
 $array = ['a', 'b', 'c', 'd']
 
 nth($array, 1)
@@ -888,6 +947,7 @@ nth($array, 1)
 
 nth($array, -2)
 // => 'c'
+
 ```
 ### pull
 
@@ -898,11 +958,15 @@ for equality comparisons.
 **Note:** Unlike `without`, this method mutates `array`. Use `remove`
 to remove elements from an array by predicate.
 
+
+
+
+
 **Arguments:**
 
 @param array $array The array to modify.
 
-@param array $values The values to remove.
+@param array<int, string> $values The values to remove.
 
 
 
@@ -927,6 +991,9 @@ var_dump($array)
 This method is like `pull` except that it accepts an array of values to remove.
 
 **Note:** Unlike `difference`, this method mutates `array`.
+
+
+
 
 **Arguments:**
 
@@ -960,6 +1027,9 @@ by which they're compared. The iteratee is invoked with one argument: (value).
 
 **Note:** Unlike `differenceBy`, this method mutates `array`.
 
+
+
+
 **Arguments:**
 
 @param array $array The array to modify.
@@ -978,11 +1048,13 @@ Example:
 ```php
 <?php
  use function _\pullAllBy;
+
 $array = [[ 'x' => 1 ], [ 'x' => 2 ], [ 'x' => 3 ], [ 'x' => 1 ]]
 
 pullAllBy($array, [[ 'x' => 1 ], [ 'x' => 3 ]], 'x')
 var_dump($array)
 // => [[ 'x' => 2 ]]
+
 ```
 ### pullAllWith
 
@@ -991,6 +1063,9 @@ is invoked to compare elements of `array` to `values`. The comparator is
 invoked with two arguments: (arrVal, othVal).
 
 **Note:** Unlike `differenceWith`, this method mutates `array`.
+
+
+
 
 **Arguments:**
 
@@ -1025,11 +1100,14 @@ array of removed elements.
 
 **Note:** Unlike `at`, this method mutates `array`.
 
+
+
+
 **Arguments:**
 
 @param array $array The array to modify.
 
-@param int|int[] $indexes The indexes of elements to remove.
+@param (int | int[]) $indexes The indexes of elements to remove.
 
 
 
@@ -1061,6 +1139,9 @@ with three arguments: (value, index, array).
 **Note:** Unlike `filter`, this method mutates `array`. Use `pull`
 to pull elements from an array by value.
 
+
+
+
 **Arguments:**
 
 @param array $array The array to modify.
@@ -1077,6 +1158,7 @@ Example:
 ```php
 <?php
  use function _\remove;
+
 $array = [1, 2, 3, 4]
 $evens = remove($array, function ($n) { return $n % 2 === 0; })
 
@@ -1085,10 +1167,13 @@ var_dump($array)
 
 var_dump($evens)
 // => [2, 4]
+
 ```
 ### sample
 
 Gets a random element from `array`.
+
+
 
 
 
@@ -1118,6 +1203,7 @@ size of `array`.
 
 
 
+
 **Arguments:**
 
 @param array $array The array to sample.
@@ -1134,15 +1220,18 @@ Example:
 ```php
 <?php
  use function _\sampleSize;
+
 sampleSize([1, 2, 3], 2)
 // => [3, 1]
 
 sampleSize([1, 2, 3], 4)
 // => [2, 3, 1]
+
 ```
 ### shuffle
 
 Creates an array of shuffled values
+
 
 
 
@@ -1160,8 +1249,10 @@ Example:
 ```php
 <?php
  use function _\shuffle;
+
 shuffle([1, 2, 3, 4])
 // => [4, 1, 3, 2]
+
 ```
 ### slice
 
@@ -1189,6 +1280,8 @@ Gets all but the first element of `array`.
 
 
 
+
+
 **Arguments:**
 
 @param array $array The array to query.
@@ -1211,6 +1304,7 @@ tail([1, 2, 3])
 ### take
 
 Creates a slice of `array` with `n` elements taken from the beginning.
+
 
 
 
@@ -1247,6 +1341,7 @@ take([1, 2, 3], 0)
 ### takeRight
 
 Creates a slice of `array` with `n` elements taken from the end.
+
 
 
 
@@ -1288,6 +1383,8 @@ three arguments: (value, index, array).
 
 
 
+
+
 **Arguments:**
 
 @param array $array The array to query.
@@ -1306,9 +1403,9 @@ Example:
  use function _\takeRightWhile;
 
 $users = [
-  [ 'user' => 'barney',  'active' => false ],
-  [ 'user' => 'fred',    'active' => true ],
-  [ 'user' => 'pebbles', 'active' => true ]
+[ 'user' => 'barney',  'active' => false ],
+[ 'user' => 'fred',    'active' => true ],
+[ 'user' => 'pebbles', 'active' => true ]
 ];
 
 takeRightWhile($users, function($value) { return $value['active']; })
@@ -1320,6 +1417,8 @@ takeRightWhile($users, function($value) { return $value['active']; })
 Creates a slice of `array` with elements taken from the beginning. Elements
 are taken until `predicate` returns falsey. The predicate is invoked with
 three arguments: (value, index, array).
+
+
 
 
 
@@ -1341,9 +1440,9 @@ Example:
  use function _\takeWhile;
 
 $users = [
-  [ 'user' => 'barney',  'active' => true ],
-  [ 'user' => 'fred',    'active' => true ],
-  [ 'user' => 'pebbles', 'active' => false ]
+[ 'user' => 'barney',  'active' => true ],
+[ 'user' => 'fred',    'active' => true ],
+[ 'user' => 'pebbles', 'active' => false ]
 ]
 
 takeWhile($users, function($value) { return $value['active']; })
@@ -1358,9 +1457,11 @@ for equality comparisons.
 
 
 
+
+
 **Arguments:**
 
-@param array[] $arrays The arrays to inspect.
+@param array ...$arrays The arrays to inspect.
 
 
 
@@ -1387,9 +1488,11 @@ array in which the value occurs. The iteratee is invoked with one argument:
 
 
 
+
+
 **Arguments:**
 
-@param array[] $arrays The arrays to inspect.
+@param array<int, mixed> ...$arrays The arrays to inspect.
 
 @param callable $iteratee The iteratee invoked per element.
 
@@ -1421,9 +1524,12 @@ with two arguments: (arrVal, othVal).
 
 
 
+
+
+
 **Arguments:**
 
-@param array[] $arrays The arrays to inspect.
+@param array<int, mixed> ...$arrays The arrays to inspect.
 
 @param callable $comparator The comparator invoked per element.
 
@@ -1437,11 +1543,13 @@ Example:
 ```php
 <?php
  use function _\unionWith;
+
 $objects = [['x' => 1, 'y' => 2], ['x' => 2, 'y' => 1]]
 $others = [['x' => 1, 'y' => 1], ['x' => 1, 'y' => 2]]
 
 unionWith($objects, $others, '_::isEqual')
 // => [['x' => 1, 'y' => 2], ['x' => 2, 'y' => 1], ['x' => 1, 'y' => 1]]
+
 ```
 ### uniq
 
@@ -1450,6 +1558,7 @@ Creates a duplicate-free version of an array, using
 for equality comparisons, in which only the first occurrence of each element
 is kept. The order of result values is determined by the order they occur
 in the array.
+
 
 
 
@@ -1482,6 +1591,7 @@ order they occur in the array. The iteratee is invoked with one argument:
 
 
 
+
 **Arguments:**
 
 @param array $array The array to inspect.
@@ -1509,6 +1619,7 @@ This method is like `uniq` except that it accepts `comparator` which
 is invoked to compare elements of `array`. The order of result values is
 determined by the order they occur in the array.The comparator is invoked
 with two arguments: (arrVal, othVal).
+
 
 
 
@@ -1543,6 +1654,7 @@ configuration.
 
 
 
+
 **Arguments:**
 
 @param array $array The array of grouped elements to process.
@@ -1569,15 +1681,17 @@ unzip($zipped)
 
 This method is like `unzip` except that it accepts `iteratee` to specify
 how regrouped values should be combined. The iteratee is invoked with the
-elements of each group: (.
+elements of each group: (...group).
 
-..group).
+
+
+
 
 **Arguments:**
 
 @param array $array The array of grouped elements to process.
 
-@param callable $iteratee The function to combine regrouped values.
+@param (callable | null) $iteratee The function to combine regrouped values.
 
 
 
@@ -1605,11 +1719,14 @@ for equality comparisons.
 
 **Note:** Unlike `pull`, this method returns a new array.
 
+
+
+
 **Arguments:**
 
 @param array $array The array to inspect.
 
-@param array $values The values to exclude.
+@param array<int, mixed> $values The values to exclude.
 
 
 
@@ -1634,9 +1751,10 @@ second elements of the given arrays, and so on.
 
 
 
+
 **Arguments:**
 
-@param array[] $arrays The arrays to process.
+@param array ...$arrays The arrays to process.
 
 
 
@@ -1657,6 +1775,8 @@ zip(['a', 'b'], [1, 2], [true, false])
 
 This method is like `fromPairs` except that it accepts two arrays,
 one of property identifiers and one of corresponding values.
+
+
 
 
 
@@ -1691,6 +1811,8 @@ This method is like `zipObject` except that it supports property paths.
 
 
 
+
+
 **Arguments:**
 
 @param array $props The property identifiers.
@@ -1701,7 +1823,7 @@ This method is like `zipObject` except that it supports property paths.
 
 **Return:**
 
-@return object the new object.
+@return \stdClass the new object.
 
 Example:
 ```php
@@ -1710,18 +1832,18 @@ Example:
 
 zipObjectDeep(['a.b[0].c', 'a.b[1].d'], [1, 2])
 /* => class stdClass#20 (1) {
- public $a => class stdClass#19 (1) {
-     public $b =>
-         array(2) {
-             [0] => class stdClass#17 (1) {
-                     public $c => int(1)
-                 }
-            [1] => class stdClass#18 (1) {
-                 public $d => int(2)
-                 }
-         }
-     }
- }
+public $a => class stdClass#19 (1) {
+public $b =>
+array(2) {
+[0] => class stdClass#17 (1) {
+public $c => int(1)
+}
+[1] => class stdClass#18 (1) {
+public $d => int(2)
+}
+}
+}
+}
 *\/
 
 ```
@@ -1729,13 +1851,15 @@ zipObjectDeep(['a.b[0].c', 'a.b[1].d'], [1, 2])
 
 This method is like `zip` except that it accepts `iteratee` to specify
 how grouped values should be combined. The iteratee is invoked with the
-elements of each group: (.
+elements of each group: (...group).
 
-..group).
+
+
+
 
 **Arguments:**
 
-@param array[] $arrays The arrays to process.
+@param array<int, (array | callable)> ...$arrays The arrays to process.
 
 @param callable $iteratee The function to combine grouped values.
 
@@ -1762,6 +1886,7 @@ Creates an array composed of keys generated from the results of running
 each element of `collection` through `iteratee`. The corresponding value of
 each key is the number of times the key was returned by `iteratee`. The
 iteratee is invoked with one argument: (value).
+
 
 
 
@@ -1793,7 +1918,6 @@ countBy(['one', 'two', 'three'], 'strlen');
 ### each
 
 Iterates over elements of `collection` and invokes `iteratee` for each element.
-
 The iteratee is invoked with three arguments: (value, index|key, collection).
 Iteratee functions may exit iteration early by explicitly returning `false`.
 
@@ -1801,9 +1925,13 @@ Iteratee functions may exit iteration early by explicitly returning `false`.
 property are iterated like arrays. To avoid this behavior use `forIn`
 or `forOwn` for object iteration.
 
+
+
+
+
 **Arguments:**
 
-@param array|object $collection The collection to iterate over.
+@param (array | iterable | object) $collection The collection to iterate over.
 
 @param callable $iteratee The function invoked per iteration.
 
@@ -1811,7 +1939,7 @@ or `forOwn` for object iteration.
 
 **Return:**
 
-@return array|object Returns `collection`.
+@return (array | object) Returns `collection`.
 
 Example:
 ```php
@@ -1832,9 +1960,10 @@ This method is like `each` except that it iterates over elements of
 
 
 
+
 **Arguments:**
 
-@param array|object $collection The collection to iterate over.
+@param (array | iterable | object) $collection The collection to iterate over.
 
 @param callable $iteratee The function invoked per iteration.
 
@@ -1842,7 +1971,7 @@ This method is like `each` except that it iterates over elements of
 
 **Return:**
 
-@return array|object Returns `collection`.
+@return (array | object) Returns `collection`.
 
 Example:
 ```php
@@ -1860,6 +1989,10 @@ Iterates over elements of `array`, returning an array of all elements
 arguments: (value, index, array).
 
 **Note:** Unlike `remove`, this method returns a new array.
+
+
+
+
 
 **Arguments:**
 
@@ -1879,8 +2012,8 @@ Example:
  use function _\filter;
 
 $users = [
-    [ 'user' => 'barney', 'age' => 36, 'active' => true],
-    [ 'user' => 'fred',   'age' => 40, 'active' => false]
+[ 'user' => 'barney', 'age' => 36, 'active' => true],
+[ 'user' => 'fred',   'age' => 40, 'active' => false]
 ];
 
 filter($users, function($o) { return !$o['active']; });
@@ -1907,6 +2040,8 @@ arguments: (value, index|key, collection).
 
 
 
+
+
 **Arguments:**
 
 @param iterable $collection The collection to inspect.
@@ -1927,9 +2062,9 @@ Example:
  use function _\find;
 
 $users = [
-    ['user' => 'barney',  'age' => 36, 'active' => true],
-    ['user' => 'fred',    'age' => 40, 'active' => false],
-    ['user' => 'pebbles', 'age' => 1,  'active' => true]
+['user' => 'barney',  'age' => 36, 'active' => true],
+['user' => 'fred',    'age' => 40, 'active' => false],
+['user' => 'pebbles', 'age' => 1,  'active' => true]
 ];
 
 find($users, function($o) { return $o['age'] < 40; });
@@ -1955,6 +2090,8 @@ This method is like `find` except that it iterates over elements of
 
 
 
+
+
 **Arguments:**
 
 @param iterable $collection The collection to inspect.
@@ -1976,7 +2113,7 @@ Example:
 
 findLast([1, 2, 3, 4], function ($n) { return $n % 2 == 1; })
 // => 3
-</cdoe>
+
 ```
 ### flatMap
 
@@ -1986,9 +2123,11 @@ with three arguments: (value, index|key, collection).
 
 
 
+
+
 **Arguments:**
 
-@param iterable $ collection The collection to iterate over.
+@param iterable $collection The collection to iterate over.
 
 @param callable $iteratee The function invoked per iteration.
 
@@ -2004,7 +2143,7 @@ Example:
  use function _\flatMap;
 
 function duplicate($n) {
-  return [$n, $n]
+return [$n, $n]
 }
 
 flatMap([1, 2], 'duplicate')
@@ -2018,9 +2157,10 @@ mapped results.
 
 
 
+
 **Arguments:**
 
-@param iterable $ collection The collection to iterate over.
+@param iterable $collection The collection to iterate over.
 
 @param callable $iteratee The function invoked per iteration.
 
@@ -2036,7 +2176,7 @@ Example:
  use function _\flatMapDeep;
 
 function duplicate($n) {
-  return [[[$n, $n]]];
+return [[[$n, $n]]];
 }
 
 flatMapDeep([1, 2], 'duplicate');
@@ -2050,9 +2190,10 @@ mapped results up to `depth` times.
 
 
 
+
 **Arguments:**
 
-@param iterable $ collection The collection to iterate over.
+@param iterable $collection The collection to iterate over.
 
 @param callable $iteratee The function invoked per iteration.
 
@@ -2070,7 +2211,7 @@ Example:
  use function _\flatMapDepth;
 
 function duplicate($n) {
-  return [[[$n, $n]]]
+return [[[$n, $n]]]
 }
 
 flatMapDepth([1, 2], 'duplicate', 2)
@@ -2087,9 +2228,10 @@ key. The iteratee is invoked with one argument: (value).
 
 
 
+
 **Arguments:**
 
-@param iterable $ collection The collection to iterate over.
+@param iterable $collection The collection to iterate over.
 
 @param callable $iteratee The iteratee to transform keys.
 
@@ -2120,11 +2262,12 @@ for, and `this` bound to, each element in `collection`.
 
 
 
+
 **Arguments:**
 
 @param iterable $collection The collection to iterate over.
 
-@param array|callable|string $path The path of the method to invoke or the function invoked per iteration.
+@param (array | callable | string) $path The path of the method to invoke or the function invoked per iteration.
 
 @param array $args The arguments to invoke each method with.
 
@@ -2155,6 +2298,7 @@ iteratee is invoked with one argument: (value).
 
 
 
+
 **Arguments:**
 
 @param iterable $collection The collection to iterate over.
@@ -2173,8 +2317,8 @@ Example:
  use function _\keyBy;
 
 $array = [
-  ['direction' => 'left', 'code' => 97],
-  ['direction' => 'right', 'code' => 100],
+['direction' => 'left', 'code' => 97],
+['direction' => 'right', 'code' => 100],
 ];
 
 keyBy($array, function ($o) { return \chr($o['code']); })
@@ -2199,11 +2343,14 @@ The guarded methods are:
 `sampleSize`, `slice`, `some`, `sortBy`, `split`, `take`, `takeRight`,
 `template`, `trim`, `trimEnd`, `trimStart`, and `words`
 
+
+
+
 **Arguments:**
 
-@param array|object $collection The collection to iterate over.
+@param (array | object) $collection The collection to iterate over.
 
-@param callable|string|array $iteratee The function invoked per iteration.
+@param (callable | string | array) $iteratee The function invoked per iteration.
 
 
 
@@ -2217,7 +2364,7 @@ Example:
  use function _\map;
 
 function square(int $n) {
-  return $n * $n;
+return $n * $n;
 }
 
 map([4, 8], $square);
@@ -2227,8 +2374,8 @@ map((object) ['a' => 4, 'b' => 8], $square);
 // => [16, 64] (iteration order is not guaranteed)
 
 $users = [
-  [ 'user' => 'barney' ],
-  [ 'user' => 'fred' ]
+[ 'user' => 'barney' ],
+[ 'user' => 'fred' ]
 ];
 
 // The `property` iteratee shorthand.
@@ -2245,11 +2392,12 @@ descending or "asc" for ascending sort order of corresponding values.
 
 
 
+
 **Arguments:**
 
-@param iterable $collection The collection to iterate over.
+@param (iterable | null) $collection The collection to iterate over.
 
-@param array[]|callable[]|string[] $iteratee The iteratee(s) to sort by.
+@param (array[] | callable[] | string[]) $iteratee The iteratee(s) to sort by.
 
 @param string[] $orders The sort orders of `iteratees`.
 
@@ -2265,10 +2413,10 @@ Example:
  use function _\orderBy;
 
 $users = [
-  ['user' => 'fred',   'age' => 48],
-  ['user' => 'barney', 'age' => 34],
-  ['user' => 'fred',   'age' => 40],
-  ['user' => 'barney', 'age' => 36]
+['user' => 'fred',   'age' => 48],
+['user' => 'barney', 'age' => 34],
+['user' => 'fred',   'age' => 40],
+['user' => 'barney', 'age' => 36]
 ]
 
 // Sort by `user` in ascending order and by `age` in descending order.
@@ -2282,6 +2430,7 @@ Creates an array of elements split into two groups, the first of which
 contains elements `predicate` returns truthy for, the second of which
 contains elements `predicate` returns falsey for. The predicate is
 invoked with one argument: (value).
+
 
 
 
@@ -2301,14 +2450,16 @@ Example:
 ```php
 <?php
  use function _\partition;
+
 $users = [
-  ['user' => 'barney',  'age' => 36, 'active' => false],
-  ['user' => 'fred',    'age' => 40, 'active' => true],
-  ['user' => 'pebbles', 'age' => 1,  'active' => false]
+['user' => 'barney',  'age' => 36, 'active' => false],
+['user' => 'fred',    'age' => 40, 'active' => true],
+['user' => 'pebbles', 'age' => 1,  'active' => false]
 ];
 
 partition($users, function($user) { return $user['active']; })
 // => objects for [['fred'], ['barney', 'pebbles']]
+
 ```
 ### reduce
 
@@ -2325,6 +2476,10 @@ Many lodash methods are guarded to work as iteratees for methods like
 The guarded methods are:
 `assign`, `defaults`, `defaultsDeep`, `includes`, `merge`, `orderBy`,
 and `sortBy`
+
+
+
+
 
 **Arguments:**
 
@@ -2349,13 +2504,13 @@ reduce([1, 2], function($sum, $n) { return $sum + $n; }, 0)
 // => 3
 
 reduce(['a' => 1, 'b' => 2, 'c' => 1], function ($result, $value, $key) {
-    if (!isset($result[$value])) {
-        $result[$value] = [];
-    }
-    $result[$value][] = $key;
+if (!isset($result[$value])) {
+$result[$value] = [];
+}
+$result[$value][] = $key;
 
-    return $result;
- }, [])
+return $result;
+}, [])
 // => ['1' => ['a', 'c'], '2' => ['b']] (iteration order is not guaranteed)
 
 ```
@@ -2363,6 +2518,8 @@ reduce(['a' => 1, 'b' => 2, 'c' => 1], function ($result, $value, $key) {
 
 This method is like `reduce` except that it iterates over elements of
 `collection` from right to left.
+
+
 
 
 
@@ -2389,11 +2546,14 @@ $array = [[0, 1], [2, 3], [4, 5]];
 
 reduceRight(array, (flattened, other) => flattened.concat(other), [])
 // => [4, 5, 2, 3, 0, 1]
+
 ```
 ### reject
 
 The opposite of `filter` this method returns the elements of `collection`
 that `predicate` does **not** return truthy for.
+
+
 
 
 
@@ -2415,8 +2575,8 @@ Example:
  use function _\reject;
 
 $users = [
-  ['user' => 'barney', 'active' => true],
-  ['user' => 'fred',   'active' => false]
+['user' => 'barney', 'active' => true],
+['user' => 'fred',   'active' => false]
 ]
 
 reject($users, 'active')
@@ -2430,9 +2590,10 @@ values or the number of public properties for objects.
 
 
 
+
 **Arguments:**
 
-@param array|object|string $collection The collection to inspect.
+@param (array | object | string) $collection The collection to inspect.
 
 
 
@@ -2444,6 +2605,7 @@ Example:
 ```php
 <?php
  use function _\size;
+
 size([1, 2, 3]);
 // => 3
 
@@ -2452,25 +2614,28 @@ size(new class { public $a = 1; public $b = 2; private $c = 3; });
 
 size('pebbles');
 // => 7
+
 ```
 ### some
 
 Checks if `predicate` returns truthy for **any** element of `collection`.
-
 Iteration is stopped once `predicate` returns truthy. The predicate is
 invoked with three arguments: (value, index|key, collection).
+
+
+
 
 **Arguments:**
 
 @param iterable $collection The collection to iterate over.
 
-@param callable|string|array $predicate The function invoked per iteration.
+@param (callable | string | array) $predicate The function invoked per iteration.
 
 
 
 **Return:**
 
-@return bool Returns `true` if any element passes the predicate check, else `false`.
+@return boolean Returns `true` if any element passes the predicate check, else `false`.
 
 Example:
 ```php
@@ -2481,8 +2646,8 @@ some([null, 0, 'yes', false], , function ($value) { return \is_bool($value); }))
 // => true
 
 $users = [
-  ['user' => 'barney', 'active' => true],
-  ['user' => 'fred',   'active' => false]
+['user' => 'barney', 'active' => true],
+['user' => 'fred',   'active' => false]
 ];
 
 // The `matches` iteratee shorthand.
@@ -2507,11 +2672,12 @@ equal elements. The iteratees are invoked with one argument: (value).
 
 
 
+
 **Arguments:**
 
-@param array|object $collection The collection to iterate over.
+@param (array | object | null) $collection The collection to iterate over.
 
-@param callable|callable[] $iteratees The iteratees to sort by.
+@param (callable | callable[]) $iteratees The iteratees to sort by.
 
 
 
@@ -2525,10 +2691,10 @@ Example:
  use function _\sortBy;
 
 $users = [
-  [ 'user' => 'fred',   'age' => 48 ],
-  [ 'user' => 'barney', 'age' => 36 ],
-  [ 'user' => 'fred',   'age' => 40 ],
-  [ 'user' => 'barney', 'age' => 34 ],
+[ 'user' => 'fred',   'age' => 48 ],
+[ 'user' => 'barney', 'age' => 36 ],
+[ 'user' => 'fred',   'age' => 40 ],
+[ 'user' => 'barney', 'age' => 34 ],
 ];
 
 sortBy($users, [function($o) { return $o['user']; }]);
@@ -2543,6 +2709,7 @@ sortBy($users, ['user', 'age']);
 ### now
 
 Gets the timestamp of the number of milliseconds that have elapsed since the Unix epoch (1 January 1970 00:00:00 UTC).
+
 
 
 
@@ -2565,6 +2732,305 @@ now();
 ```
 ## Function
 
+### after
+
+The opposite of `before`; this method creates a function that invokes
+`func` once it's called `n` or more times.
+
+
+
+
+
+**Arguments:**
+
+@param int $n The number of calls before `func` is invoked.
+
+@param Callable $func The function to restrict.
+
+
+
+**Return:**
+
+@return Callable Returns the new restricted function.
+
+Example:
+```php
+<?php
+ use function _\after;
+
+$saves = ['profile', 'settings'];
+
+$done = after(count($saves), function() {
+echo 'done saving!';
+});
+
+forEach($saves, function($type) use($done) {
+asyncSave([ 'type' => $type, 'complete' => $done ]);
+});
+// => Prints 'done saving!' after the two async saves have completed.
+
+```
+### ary
+
+Creates a function that invokes `func`, with up to `n` arguments,
+ignoring any additional arguments.
+
+
+
+
+
+**Arguments:**
+
+@param callable $func The function to cap arguments for.
+
+@param int $n The arity cap.
+
+
+
+**Return:**
+
+@return Callable Returns the new capped function.
+
+Example:
+```php
+<?php
+ use function _\ary;
+
+map(['6', '8', '10'], ary('intval', 1));
+// => [6, 8, 10]
+
+```
+### before
+
+Creates a function that invokes `func`, with the arguments
+of the created function, while it's called less than `n` times. Subsequent
+calls to the created function return the result of the last `func` invocation.
+
+
+
+
+
+**Arguments:**
+
+@param int $n The number of calls at which `func` is no longer invoked.
+
+@param callable $func The function to restrict.
+
+
+
+**Return:**
+
+@return callable Returns the new restricted function.
+
+Example:
+```php
+<?php
+ use function _\before;
+
+$users = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+$result = uniqBy(map($users, before(5, [$repository, 'find'])), 'id')
+// => Fetch up to 4 results.
+
+```
+### bind
+
+Creates a function that invokes `func` with the `this` binding of `object`
+and `partials` prepended to the arguments it receives.
+
+
+
+
+**Arguments:**
+
+@param callable $function The function to bind.
+
+@param (object | mixed) $object The `object` binding of `func`.
+
+@param array<int, mixed> $partials The arguments to be partially applied.
+
+
+
+**Return:**
+
+@return callable Returns the new bound function.
+
+Example:
+```php
+<?php
+ use function _\bind;
+
+function greet($greeting, $punctuation) {
+return $greeting . ' ' . $this->user . $punctuation;
+}
+
+$object = $object = new class {
+public $user = 'fred';
+};
+
+$bound = bind('greet', $object, 'hi');
+$bound('!');
+// => 'hi fred!'
+
+```
+### bindKey
+
+Creates a function that invokes the method `$function` of `$object` with `$partials`
+prepended to the arguments it receives.
+
+This method differs from `bind` by allowing bound functions to reference
+methods that may be redefined or don't yet exist
+
+
+
+
+**Arguments:**
+
+@param object $object The object to invoke the method on.
+
+@param string $function The name of the method.
+
+@param array<int, mixed> $partials The arguments to be partially applied.
+
+
+
+**Return:**
+
+@return callable Returns the new bound function.
+
+Example:
+```php
+<?php
+ use function _\bindKey;
+
+$object = new class {
+private $user = 'fred';
+function greet($greeting, $punctuation) {
+return $greeting.' '.$this->user.$punctuation;
+}
+};
+
+$bound = bindKey($object, 'greet', 'hi');
+$bound('!');
+// => 'hi fred!'
+
+```
+### curry
+
+Creates a function that accepts arguments of `func` and either invokes
+`func` returning its result, if at least `arity` number of arguments have
+been provided, or returns a function that accepts the remaining `func`
+arguments, and so on. The arity of `func` may be specified if `func.length`
+is not sufficient.
+
+The `_.curry.placeholder` value, which defaults to `_` in monolithic builds,
+may be used as a placeholder for provided arguments.
+
+**Note:** This method doesn't set the "length" property of curried functions.
+
+
+
+
+**Arguments:**
+
+@param callable $func The function to curry.
+
+@param (int | null) $arity The arity of `func`.
+
+
+
+**Return:**
+
+@return callable Returns the new curried function.
+
+Example:
+```php
+<?php
+ use function _\curry;
+
+$abc = function($a, $b, $c) {
+return [$a, $b, $c];
+};
+
+$curried = curry($abc);
+
+$curried(1)(2)(3);
+// => [1, 2, 3]
+
+$curried(1, 2)(3);
+// => [1, 2, 3]
+
+$curried(1, 2, 3);
+// => [1, 2, 3]
+
+// Curried with placeholders.
+$curried(1)(_, 3)(2);
+// => [1, 2, 3]
+
+```
+### delay
+
+Invokes `func` after `wait` milliseconds. Any additional arguments are
+provided to `func` when it's invoked.
+
+
+
+
+**Arguments:**
+
+@param callable $func The function to delay.
+
+@param int $wait The number of milliseconds to delay invocation.
+
+@param array<int, mixed> $args
+
+
+
+**Return:**
+
+@return int the timer id.
+
+Example:
+```php
+<?php
+ use function _\delay;
+
+delay(function($text) {
+echo $text;
+}, 1000, 'later');
+// => Echo 'later' after one second.
+
+```
+### flip
+
+Creates a function that invokes `func` with arguments reversed.
+
+
+
+
+
+**Arguments:**
+
+@param callable $func The function to flip arguments for.
+
+
+
+**Return:**
+
+@return callable Returns the new flipped function.
+
+Example:
+```php
+<?php
+ use function _\flip;
+
+$flipped = flip(function() {
+return func_get_args();
+});
+
+flipped('a', 'b', 'c', 'd');
+// => ['d', 'c', 'b', 'a']
+
+```
 ### memoize
 
 Creates a function that memoizes the result of `func`. If `resolver` is
@@ -2578,11 +3044,15 @@ constructor with one whose instances implement the
 [`Map`](http://ecma-international.org/ecma-262/7.0/#sec-properties-of-the-map-prototype-object)
 method interface of `clear`, `delete`, `get`, `has`, and `set`.
 
+
+
+
+
 **Arguments:**
 
 @param callable $func The function to have its output memoized.
 
-@param callable $resolver The function to resolve the cache key.
+@param (callable | null) $resolver The function to resolve the cache key.
 
 
 
@@ -2621,6 +3091,8 @@ Creates a function that negates the result of the predicate `func`
 
 
 
+
+
 **Arguments:**
 
 @param callable $predicate The predicate to negate.
@@ -2637,17 +3109,264 @@ Example:
  use function _\negate;
 
 function isEven($n) {
-  return $n % 2 == 0;
+return $n % 2 == 0;
 }
 
 filter([1, 2, 3, 4, 5, 6], negate($isEven));
 // => [1, 3, 5]
+
+```
+### once
+
+Creates a function that is restricted to invoking `func` once. Repeat calls
+to the function return the value of the first invocation. The `func` is
+invoked with the arguments of the created function.
+
+
+
+
+
+**Arguments:**
+
+@param callable $func The function to restrict.
+
+
+
+**Return:**
+
+@return callable the new restricted function.
+
+Example:
+```php
+<?php
+ use function _\once;
+
+$initialize = once('createApplication');
+$initialize();
+$initialize();
+// => `createApplication` is invoked once
+
+```
+### overArgs
+
+Creates a function that invokes `func` with its arguments transformed.
+
+
+
+
+
+**Arguments:**
+
+@param callable $func The function to wrap.
+
+@param callable[] $transforms The argument transforms.
+
+
+
+**Return:**
+
+@return callable the new function.
+
+Example:
+```php
+<?php
+ use function _\overArgs;
+
+function doubled($n) {
+return $n * 2;
+}
+
+function square($n) {
+return $n * $n;
+}
+
+$func = overArgs(function($x, $y) {
+return [$x, $y];
+}, ['square', 'doubled']);
+
+$func(9, 3);
+// => [81, 6]
+
+$func(10, 5);
+// => [100, 10]
+
+```
+### partial
+
+Creates a function that invokes `func` with `partials` prepended to the
+arguments it receives.
+
+
+
+
+
+**Arguments:**
+
+@param callable $func The function to partially apply arguments to.
+
+@param array<int, mixed> $partials The arguments to be partially applied.
+
+
+
+**Return:**
+
+@return callable Returns the new partially applied function.
+
+Example:
+```php
+<?php
+ use function _\partial;
+
+function greet($greeting, $name) {
+return $greeting . ' ' . $name;
+}
+
+$sayHelloTo = partial('greet', 'hello');
+$sayHelloTo('fred');
+// => 'hello fred'
+
+```
+### rest
+
+Creates a function that invokes `func` with the `this` binding of the
+created function and arguments from `start` and beyond provided as
+an array.
+
+
+
+
+
+**Arguments:**
+
+@param callable $func The function to apply a rest parameter to.
+
+@param (int | null) $start The start position of the rest parameter.
+
+
+
+**Return:**
+
+@return callable Returns the new function.
+
+Example:
+```php
+<?php
+ use function _\rest;
+
+$say = rest(function($what, $names) {
+return $what . ' ' . implode(', ', initial($names)) .
+(size($names) > 1 ? ', & ' : '') . last($names);
+});
+
+$say('hello', 'fred', 'barney', 'pebbles');
+// => 'hello fred, barney, & pebbles'
+
+```
+### spread
+
+Creates a function that invokes `func` with the `this` binding of the
+create function and an array of arguments much like
+[`Function#apply`](http://www.ecma-international.org/ecma-262/7.0/#sec-function.prototype.apply).
+
+**Note:** This method is based on the
+[spread operator](https://mdn.io/spread_operator).
+
+
+
+
+
+**Arguments:**
+
+@param callable $func The function to spread arguments over.
+
+@param int $start The start position of the spread.
+
+
+
+**Return:**
+
+@return callable Returns the new function.
+
+Example:
+```php
+<?php
+ use function _\spread;
+
+$say = spread(function($who, $what) {
+return $who . ' says ' . $what;
+});
+
+$say(['fred', 'hello']);
+// => 'fred says hello'
+
+```
+### unary
+
+Creates a function that accepts up to one argument, ignoring any
+additional arguments.
+
+
+
+
+**Arguments:**
+
+@param callable $func The function to cap arguments for.
+
+
+
+**Return:**
+
+@return callable the new capped function.
+
+Example:
+```php
+<?php
+ use function _\unary;
+
+map(['6', '8', '10'], unary('intval'));
+// => [6, 8, 10]
+
+```
+### wrap
+
+Creates a function that provides `value` to `wrapper` as its first
+argument. Any additional arguments provided to the function are appended
+to those provided to the `wrapper`.
+
+
+
+
+**Arguments:**
+
+@param mixed $value The value to wrap.
+
+@param callable $wrapper The wrapper function.
+
+
+
+**Return:**
+
+@return callable the new function.
+
+Example:
+```php
+<?php
+ use function _\wrap;
+
+$p = wrap('_\escape', function($func, $text) {
+return '<p>' . $func($text) . '</p>';
+});
+
+$p('fred, barney, & pebbles');
+// => '<p>fred, barney, &amp; pebbles</p>'
+
 ```
 ## Lang
 
 ### eq
 
 Performs a comparison between two values to determine if they are equivalent.
+
 
 
 
@@ -2661,7 +3380,7 @@ Performs a comparison between two values to determine if they are equivalent.
 
 **Return:**
 
-@return bool Returns `true` if the values are equivalent, else `false`.
+@return boolean Returns `true` if the values are equivalent, else `false`.
 
 Example:
 ```php
@@ -2697,6 +3416,10 @@ DateTime objects, exception objects, SPLObjectStorage, numbers,
 strings, typed arrays, resources, DOM Nodes. objects are compared
 by their own, not inherited, enumerable properties.
 
+
+
+
+
 **Arguments:**
 
 @param mixed $value The value to compare.
@@ -2731,6 +3454,8 @@ Checks if `value` is an `\Exception`, `\ParseError`, \Error`, \Throwable`, \Soap
 
 
 
+
+
 **Arguments:**
 
 @param mixed $value The value to check.
@@ -2739,7 +3464,7 @@ Checks if `value` is an `\Exception`, `\ParseError`, \Error`, \Throwable`, \Soap
 
 **Return:**
 
-@return bool Returns `true` if `value` is an error object, else `false`.
+@return boolean Returns `true` if `value` is an error object, else `false`.
 
 Example:
 ```php
@@ -2751,6 +3476,7 @@ isError(new \Exception())
 
 isError(\Exception::Class)
 // => false
+
 ```
 ## Math
 
@@ -2760,17 +3486,19 @@ Adds two numbers.
 
 
 
+
+
 **Arguments:**
 
-@param int|float|string $augend The first number in an addition.
+@param (int | float | string) $augend The first number in an addition.
 
-@param int|float|string $addend The second number in an addition.
+@param (int | float | string) $addend The second number in an addition.
 
 
 
 **Return:**
 
-@return int|float Returns the total.
+@return (int | float) Returns the total.
 
 Example:
 ```php
@@ -2787,15 +3515,16 @@ Computes the maximum value of `array`. If `array` is empty or falsey, null is re
 
 
 
+
 **Arguments:**
 
-@param array $ array The array to iterate over.
+@param (array | null) $array The array to iterate over.
 
 
 
 **Return:**
 
-@return int|null Returns the maximum value.
+@return (int | null) Returns the maximum value.
 
 Example:
 ```php
@@ -2817,11 +3546,12 @@ the value is ranked. The iteratee is invoked with one argument: (value).
 
 
 
+
 **Arguments:**
 
 @param array $array The array to iterate over.
 
-@param callable|string $iteratee The iteratee invoked per element.
+@param (callable | string) $iteratee The iteratee invoked per element.
 
 
 
@@ -2842,6 +3572,7 @@ maxBy($objects, function($o) { return $o['n']; });
 // The `property` iteratee shorthand.
 maxBy($objects, 'n');
 // => ['n' => 2]
+
 ```
 ## Number
 
@@ -2851,13 +3582,15 @@ Clamps `number` within the inclusive `lower` and `upper` bounds.
 
 
 
+
+
 **Arguments:**
 
-@param int $ number The number to clamp.
+@param int $number The number to clamp.
 
-@param int $ lower The lower bound.
+@param int $lower The lower bound.
 
-@param int $ upper The upper bound.
+@param int $upper The upper bound.
 
 
 
@@ -2881,13 +3614,16 @@ clamp(10, -5, 5)
 
 Checks if `number` is between `start` and up to, but not including, `end`. If
 `end` is not specified, it's set to `start` with `start` then set to `0`.
-
 If `start` is greater than `end` the params are swapped to support
 negative ranges.
 
+
+
+
+
 **Arguments:**
 
-@param float $ number The number to check.
+@param float $number The number to check.
 
 @param float $start The start of the range.
 
@@ -2897,7 +3633,7 @@ negative ranges.
 
 **Return:**
 
-@return bool Returns `true` if `number` is in the range, else `false`.
+@return boolean Returns `true` if `number` is in the range, else `false`.
 
 Example:
 ```php
@@ -2929,29 +3665,33 @@ inRange(-3, -2, -6)
 ### random
 
 Produces a random number between the inclusive `lower` and `upper` bounds.
-
 If only one argument is provided a number between `0` and the given number
 is returned. If `floating` is `true`, or either `lower` or `upper` are
 floats, a floating-point number is returned instead of an integer.
 
+
+
+
+
 **Arguments:**
 
-@param int|float $lower The lower bound.
+@param (int | float | bool) $lower The lower bound.
 
-@param int|float $upper The upper bound.
+@param (int | float | bool) $upper The upper bound.
 
-@param bool $floating Specify returning a floating-point number.
+@param (bool | null) $floating Specify returning a floating-point number.
 
 
 
 **Return:**
 
-@return int|float Returns the random number.
+@return (int | float) Returns the random number.
 
 Example:
 ```php
 <?php
  use function _\random;
+
 random(0, 5)
 // => an integer between 0 and 5
 
@@ -2963,12 +3703,120 @@ random(5, true)
 
 random(1.2, 5.2)
 // => a floating-point number between 1.2 and 5.2
+
+```
+## Object
+
+### pick
+
+Creates an object composed of the picked `object` properties.
+
+
+
+
+**Arguments:**
+
+@param object $object The source object.
+
+@param (string | string[]) $paths The property paths to pick.
+
+
+
+**Return:**
+
+@return \stdClass Returns the new object.
+
+Example:
+```php
+<?php
+ use function _\pick;
+
+$object = (object) ['a' => 1, 'b' => '2', 'c' => 3];
+
+pick($object, ['a', 'c']);
+// => (object) ['a' => 1, 'c' => 3]
+
+```
+### pickBy
+
+Creates an object composed of the `object` properties `predicate` returns
+truthy for. The predicate is invoked with two arguments: (value, key).
+
+
+
+
+**Arguments:**
+
+@param (object | null) $object The source object.
+
+@param callable $predicate The function invoked per property.
+
+
+
+**Return:**
+
+@return \stdClass Returns the new object.
+
+Example:
+```php
+<?php
+ use function _\pickBy;
+
+$object = (object) ['a' => 1, 'b' => 'abc', 'c' => 3];
+
+pickBy(object, 'is_numeric');
+// => (object) ['a' => 1, 'c' => 3]
+
+```
+## Seq
+
+### chain
+
+Creates a `lodash` wrapper instance that wraps `value` with explicit method
+chain sequences enabled. The result of such sequences must be unwrapped
+with `->value()`.
+
+
+
+
+**Arguments:**
+
+@param mixed $value The value to wrap.
+
+
+
+**Return:**
+
+@return \_ Returns the new `lodash` wrapper instance.
+
+Example:
+```php
+<?php
+ use function _\chain;
+
+$users = [
+['user' => 'barney',  'age' => 36],
+['user' => 'fred',    'age' => 40],
+['user' => 'pebbles', 'age' => 1 ],
+];
+
+$youngest = chain($users)
+->sortBy('age')
+->map(function($o) {
+return $o['user'] . ' is ' . $o['age'];
+})
+->head()
+->value();
+// => 'pebbles is 1'
+
 ```
 ## String
 
 ### camelCase
 
 Converts `string` to [camel case](https://en.wikipedia.org/wiki/CamelCase).
+
+
 
 
 
@@ -3004,6 +3852,7 @@ to lower case.
 
 
 
+
 **Arguments:**
 
 @param string $string The string to capitalize.
@@ -3033,6 +3882,8 @@ letters to basic Latin letters and removing
 
 
 
+
+
 **Arguments:**
 
 @param string $string The string to deburr.
@@ -3047,12 +3898,15 @@ Example:
 ```php
 <?php
  use function _\deburr;
+
 deburr('déjà vu')
 // => 'deja vu'
+
 ```
 ### endsWith
 
 Checks if `string` ends with the given target string.
+
 
 
 
@@ -3068,7 +3922,7 @@ Checks if `string` ends with the given target string.
 
 **Return:**
 
-@return bool Returns `true` if `string` ends with `target`, else `false`.
+@return boolean Returns `true` if `string` ends with `target`, else `false`.
 
 Example:
 ```php
@@ -3090,6 +3944,7 @@ endsWith('abc', 'b', 2)
 Converts the characters "&", "<", ">", '"', and "'" in `string` to their
 corresponding HTML entities.
 
+
 Though the ">" character is escaped for symmetry, characters like
 ">" and "/" don't need escaping in HTML and have no special meaning
 unless they're part of a tag or unquoted attribute value. See
@@ -3099,6 +3954,9 @@ unless they're part of a tag or unquoted attribute value. See
 When working with HTML you should always
 [quote attribute values](http://wonko.com/post/html-escaping) to reduce
 XSS vectors.
+
+
+
 
 **Arguments:**
 
@@ -3126,6 +3984,7 @@ Escapes the `RegExp` special characters "^", "$", "\", ".", "*", "+",
 
 
 
+
 **Arguments:**
 
 @param string $string The string to escape.
@@ -3149,6 +4008,7 @@ escapeRegExp('[lodash](https://lodash.com/)')
 
 Converts `string` to
 [kebab case](https://en.wikipedia.org/wiki/Letter_case#Special_case_styles).
+
 
 
 
@@ -3183,6 +4043,7 @@ Converts `string`, as space separated words, to lower case.
 
 
 
+
 **Arguments:**
 
 @param string $string The string to convert.
@@ -3214,6 +4075,7 @@ Converts the first character of `string` to lower case.
 
 
 
+
 **Arguments:**
 
 @param string $string The string to convert.
@@ -3239,8 +4101,11 @@ lowerFirst('FRED')
 ### pad
 
 Pads `string` on the left and right sides if it's shorter than `length`.
-
 Padding characters are truncated if they can't be evenly divided by `length`.
+
+
+
+
 
 **Arguments:**
 
@@ -3275,6 +4140,8 @@ pad('abc', 2)
 
 Pads `string` on the right side if it's shorter than `length`. Padding
 characters are truncated if they exceed `length`.
+
+
 
 
 
@@ -3314,6 +4181,7 @@ characters are truncated if they exceed `length`.
 
 
 
+s
 **Arguments:**
 
 @param string $string ='' The string to pad.
@@ -3341,7 +4209,7 @@ padStart('abc', 6, '_-')
 
 padStart('abc', 2)
 // => 'abc'
-s
+
 ```
 ### parseInt
 
@@ -3352,9 +4220,13 @@ hexadecimal, in which case a `radix` of `16` is used.
 **Note:** This method uses PHP's built-in integer casting, which does not necessarily align with the
 [ES5 implementation](https://es5.github.io/#x15.1.2.2) of `parseInt`.
 
+
+
+
+
 **Arguments:**
 
-@param int|float|string $string The string to convert.
+@param (int | float | string) $string The string to convert.
 
 @param int $radix The radix to interpret `string` by.
 
@@ -3376,6 +4248,8 @@ parseInt('08')
 ### repeat
 
 Repeats the given string `n` times.
+
+
 
 
 
@@ -3413,13 +4287,17 @@ Replaces matches for `pattern` in `string` with `replacement`.
 **Note:** This method is based on
 [`String#replace`](https://mdn.io/String/replace).
 
+
+
+
+
 **Arguments:**
 
 @param string $string The string to modify.
 
 @param string $pattern The pattern to replace.
 
-@param callable|string $ replacement The match replacement.
+@param (callable | string) $replacement The match replacement.
 
 
 
@@ -3442,7 +4320,6 @@ Converts `string` to
 [snake case](https://en.wikipedia.org/wiki/Snake_case).
 
 
-
 **Arguments:**
 
 @param string $string The string to convert.
@@ -3457,6 +4334,7 @@ Example:
 ```php
 <?php
  use function _\snakeCase;
+
 snakeCase('Foo Bar')
 // => 'foo_bar'
 
@@ -3465,6 +4343,7 @@ snakeCase('fooBar')
 
 snakeCase('--FOO-BAR--')
 // => 'foo_bar'
+
 ```
 ### split
 
@@ -3473,9 +4352,12 @@ Splits `string` by `separator`.
 **Note:** This method is based on
 [`String#split`](https://mdn.io/String/split).
 
+
+
+
 **Arguments:**
 
-@param string $ string The string to split.
+@param string $string The string to split.
 
 @param string $separator The separator pattern to split by.
 
@@ -3500,6 +4382,7 @@ split('a-b-c', '-', 2)
 
 Converts `string` to
 [start case](https://en.wikipedia.org/wiki/Letter_case#Stylistic_or_specialised_usage).
+
 
 
 
@@ -3534,6 +4417,7 @@ Checks if `string` starts with the given target string.
 
 
 
+
 **Arguments:**
 
 @param string $string The string to inspect.
@@ -3546,7 +4430,7 @@ Checks if `string` starts with the given target string.
 
 **Return:**
 
-@return bool Returns `true` if `string` starts with `target`, else `false`.
+@return boolean Returns `true` if `string` starts with `target`, else `false`.
 
 Example:
 ```php
@@ -3572,16 +4456,18 @@ properties may be accessed as free variables in the template. If a setting
 object is given, it takes precedence over `$templateSettings` values.
 
 
+RegExp $options['escape'] = _::$templateSettings['escape'] The HTML "escape" delimiter.
+RegExp $options['evaluate'] = _::$templateSettings['evaluate'] The "evaluate" delimiter.
+array  $options['imports'] = _::$templateSettings['imports'] An object to import into the template as free variables.
+RegExp $options['interpolate'] = _::$templateSettings['interpolate'] The "interpolate" delimiter.
+
+
 
 **Arguments:**
 
 @param string $string The template string.
 
 @param array $options The options array.
-RegExp $options['escape'] = _::$templateSettings['escape'] The HTML "escape" delimiter.
-RegExp $options['evaluate'] = _::$templateSettings['evaluate'] The "evaluate" delimiter.
-array  $options['imports'] = _::$templateSettings['imports'] An object to import into the template as free variables.
-RegExp $options['interpolate'] = _::$templateSettings['interpolate'] The "interpolate" delimiter.
 
 
 
@@ -3641,6 +4527,7 @@ Converts `string`, as a whole, to lower case
 
 
 
+
 **Arguments:**
 
 @param string $string The string to convert.
@@ -3672,6 +4559,7 @@ Converts `string`, as a whole, to upper case
 
 
 
+
 **Arguments:**
 
 @param string $string The string to convert.
@@ -3695,10 +4583,12 @@ toUpper('fooBar')
 
 toUpper('__foo_bar__')
 // => '__FOO_BAR__'
+
 ```
 ### trim
 
 Removes leading and trailing whitespace or specified characters from `string`.
+
 
 
 
@@ -3732,6 +4622,7 @@ Removes trailing whitespace or specified characters from `string`.
 
 
 
+
 **Arguments:**
 
 @param string $string The string to trim.
@@ -3748,15 +4639,18 @@ Example:
 ```php
 <?php
  use function _\trimEnd;
+
 trimEnd('  abc  ')
 // => '  abc'
 
 trimEnd('-_-abc-_-', '_-')
 // => '-_-abc'
+
 ```
 ### trimStart
 
 Removes leading whitespace or specified characters from `string`.
+
 
 
 
@@ -3787,18 +4681,21 @@ trimStart('-_-abc-_-', '_-')
 ### truncate
 
 Truncates `string` if it's longer than the given maximum string length.
-
 The last characters of the truncated string are replaced with the omission
 string which defaults to "...".
+
+
+length = 30 The maximum string length.
+omission = '...' The string to indicate text is omitted.
+separator The separator pattern to truncate to.
+
+
 
 **Arguments:**
 
 @param string $string The string to truncate.
 
 @param array $options The options object.
-length = 30 The maximum string length.
-omission = '...' The string to indicate text is omitted.
-separator The separator pattern to truncate to.
 
 
 
@@ -3815,19 +4712,19 @@ truncate('hi-diddly-ho there, neighborino')
 // => 'hi-diddly-ho there, neighbo...'
 
 truncate('hi-diddly-ho there, neighborino', [
-  'length' => 24,
-  'separator' => ' '
+'length' => 24,
+'separator' => ' '
 ])
 // => 'hi-diddly-ho there,...'
 
 truncate('hi-diddly-ho there, neighborino', [
-  'length' => 24,
-  'separator' => '/,? +/'
+'length' => 24,
+'separator' => '/,? +/'
 ])
 // => 'hi-diddly-ho there...'
 
 truncate('hi-diddly-ho there, neighborino', [
-  'omission' => ' [...]'
+'omission' => ' [...]'
 ])
 // => 'hi-diddly-ho there, neig [...]'
 
@@ -3837,6 +4734,7 @@ truncate('hi-diddly-ho there, neighborino', [
 The inverse of `escape`this method converts the HTML entities
 `&amp;`, `&lt;`, `&gt;`, `&quot;` and `&#39;` in `string` to
 their corresponding characters.
+
 
 
 
@@ -3862,7 +4760,6 @@ unescape('fred, barney, &amp; pebbles')
 ### upperCase
 
 Converts `string`, as space separated words, to upper case.
-
 
 
 **Arguments:**
@@ -3896,6 +4793,7 @@ Converts the first character of `string` to upper case.
 
 
 
+
 **Arguments:**
 
 @param string $string The string to convert.
@@ -3921,6 +4819,8 @@ upperFirst('FRED')
 ### words
 
 Splits `string` into an array of its words.
+
+
 
 
 
@@ -3957,17 +4857,19 @@ object. Any additional arguments are provided to `func` when it's invoked.
 
 
 
+
+s
 **Arguments:**
 
 @param callable $func The function to attempt.
 
-@param array $args The arguments to invoke `func` with.
+@param array<int, mixed> $args The arguments to invoke `func` with.
 
 
 
 **Return:**
 
-@return mixed|\Throwable Returns the `func` result or error object.
+@return (mixed | \Throwable) Returns the `func` result or error object.
 
 Example:
 ```php
@@ -3976,17 +4878,18 @@ Example:
 
 // Avoid throwing errors for invalid PDO data source.
 $elements = attempt(function () {
-   new \PDO(null);
+new \PDO(null);
 });
 
 if (isError($elements)) {
-  $elements = [];
+$elements = [];
 }
-s
+
 ```
 ### identity
 
 This method returns the first argument it receives.
+
 
 
 
@@ -4017,9 +4920,10 @@ Creates a function that returns the value at `path` of a given object.
 
 
 
+
 **Arguments:**
 
-@param array|string $ path The path of the property to get.
+@param (array | string) $path The path of the property to get.
 
 
 
@@ -4033,8 +4937,8 @@ Example:
  use function _\property;
 
 $objects = [
-  [ 'a' => [ 'b' => 2 ] ],
-  [ 'a' => [ 'b' => 1 ] ]
+[ 'a' => [ 'b' => 2 ] ],
+[ 'a' => [ 'b' => 1 ] ]
 ];
 
 map($objects, property('a.b'));
